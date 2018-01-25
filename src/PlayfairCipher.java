@@ -14,14 +14,24 @@ public class PlayfairCipher {
         System.out.print("Replace J with I? yes/no: ");
         String jOrI = sc.nextLine();
 
-        boolean changeJtoI = jOrI.equalsIgnoreCase("yes");
+        boolean skipLetter = userChoice(jOrI, sc);
 
-        createCiperTable(alphabetKey, changeJtoI);
+        createCiperTable(alphabetKey, skipLetter);
 
-        String encode = encodeMessage(prepareText(message, changeJtoI));
+        String encode = encodeMessage(prepareText(message, skipLetter));
 
         System.out.printf("%nEncoded message: %n%s%n", encode);
         System.out.printf("%nDecoded message: %n%s%n", decode(encode));
+    }
+
+    private static boolean userChoice(String jOrI, Scanner sc) {
+        while ((!jOrI.matches("(?i)(yes)")) && (!jOrI.matches("(?i)(no)"))) {
+            System.out.println("============ Wrong user input. Please enter yes or no. ============");
+            System.out.print("Replace J with I? yes/no: ");
+            jOrI = sc.nextLine();
+        }
+        boolean changeJtoI = jOrI.equalsIgnoreCase("yes");
+        return changeJtoI;
     }
 
     private static String keyMinLength(Scanner sc) {
